@@ -2,7 +2,7 @@
 
 # address-insights-performance-tests
 
-Performance test suite for the `<digital service name>`, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
+Performance test suite for the `address-insights`, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
 
 ## Pre-requisites
 
@@ -14,12 +14,6 @@ Start Mongo Docker container as follows:
 docker run --rm -d -p 27017:27017 --name mongo mongo:4.4
 ```
 
-Start `PLATFORM_TEST_EXAMPLE_UI_JOURNEY_TESTS` services as follows:
-
-```bash
-sm2 --start PLATFORM_TEST_EXAMPLE_UI_JOURNEY_TESTS
-```
-
 ### Logging
 
 The default log level for all HTTP requests is set to `WARN`. Configure [logback.xml](src/test/resources/logback.xml) to update this if required.
@@ -29,6 +23,34 @@ The default log level for all HTTP requests is set to `WARN`. Configure [logback
 Do **NOT** run a full performance test against staging from your local machine. Please [implement a new performance test job](https://confluence.tools.tax.service.gov.uk/display/DTRG/Practical+guide+to+performance+testing+a+digital+service#Practicalguidetoperformancetestingadigitalservice-SettingupabuildonJenkinstorunagainsttheStagingenvironment) and execute your job from the dashboard in [Performance Jenkins](https://performance.tools.staging.tax.service.gov.uk).
 
 ## Tests
+
+### Pre-requisites
+
+If you don't have mongodb installed locally you can run it in docker using the following command
+
+    docker run -d --rm --name mongodb -p 27017-27019:27017-27019 mongo:4
+
+If you don't have postgres installed locally you can run it in docker using the following command
+
+    docker run -d --rm --name postgresql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:10.14
+
+Run the following command to start the services locally:
+
+```
+sm2 --start ADDRESS_GATEWAY ADDRESS_REPUTATION ADDRESS_INSIGHTS INTERNAL_AUTH --appendArgs '{
+        "ADDRESS_REPUTATION": [
+            "-J-Dauditing.consumer.baseUri.port=6001",
+            "-J-Dauditing.consumer.baseUri.host=localhost",
+            "-J-Dmicroservice.services.access-control.enabled=true",
+            "-J-Dmicroservice.services.access-control.allow-list.0=address-gateway",
+            "-J-Dmicroservice.services.access-control.allow-list.1=ai-performance-tests"
+        ],
+        "ADDRESS_INSIGHTS": [
+            "-J-Dmicroservice.address-insights.database.use-canned-data=true",
+            "-J-Dauditing.enabled=true"
+        ]
+    }'
+```
 
 Run smoke test (locally) as follows:
 
