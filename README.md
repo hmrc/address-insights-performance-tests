@@ -1,18 +1,8 @@
-**This is a template README.md.  Be sure to update this with project specific content that describes your performance test project.**
-
 # address-insights-performance-tests
 
-Performance test suite for the `address-insights`, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
+Performance test suite for the `address-insights` services, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
 
 ## Pre-requisites
-
-### Services
-
-Start Mongo Docker container as follows:
-
-```bash
-docker run --rm -d -p 27017:27017 --name mongo mongo:4.4
-```
 
 ### Logging
 

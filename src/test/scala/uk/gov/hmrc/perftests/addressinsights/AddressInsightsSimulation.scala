@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.perftests.example
+package uk.gov.hmrc.perftests.addressinsights
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.example.AddressInsightsRequests.checkAddressInsightsViaGateway
+import uk.gov.hmrc.perftests.addressinsights.AddressInsightsRequests.checkAddressInsightsViaGateway
 
 class AddressInsightsSimulation extends PerformanceTestRunner {
 
