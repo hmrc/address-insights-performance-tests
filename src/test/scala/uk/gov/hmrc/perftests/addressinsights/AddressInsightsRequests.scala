@@ -41,7 +41,8 @@ object AddressInsightsRequests extends ServicesConfiguration {
             |  "postcode": "BN2 1QB",
             |  "country": "GB"
             |},
-            |"lookbackDays": 10
+            |"lookbackDays": 10,
+            |"caseId": "testCaseId"
           |}""".stripMargin
         )
       )
